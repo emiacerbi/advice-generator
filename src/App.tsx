@@ -1,13 +1,19 @@
+import { useQuery } from 'react-query'
+import { getQuote } from './helpers/getQuote'
 import Die from './components/Die'
 import Divider from './components/Divider'
 import Wrapper from './components/Wrapper'
-import { getQuote } from './helpers/getQuote'
-import { useQuery } from 'react-query'
 import Spinner from './components/Spinner'
-import { useEffect, useState } from 'react'
 
 function App() {
-  const { data, refetch, isFetching, error } = useQuery('quote', getQuote)
+  const { data, refetch, isRefetching, isFetching, error } = useQuery({
+    queryKey: ['quote'],
+    queryFn: getQuote,
+  })
+
+  const handleClick = () => {
+    refetch()
+  }
 
   if (error) console.error(error)
 
@@ -18,13 +24,17 @@ function App() {
           ADVICE #117
         </p>
         <div className="text-primary-200 text-quote grid place-content-center">
-          {isFetching ? <Spinner /> : <p>{data?.slip.advice}</p>}
+          {isFetching || isRefetching ? (
+            <Spinner />
+          ) : (
+            <p>{data?.slip.advice}</p>
+          )}
         </div>
 
         <Divider />
         <button
-          onClick={() => refetch()}
-          disabled={isFetching}
+          onClick={handleClick}
+          disabled={isFetching || isRefetching}
           className="absolute disabled:cursor-auto cursor-pointer hover:shadow-primary transition-shadow duration-200 -bottom-8 left-1/2 -translate-x-1/2 bg-primary-400 p-5 w-fit mx-auto rounded-full"
         >
           <Die />
