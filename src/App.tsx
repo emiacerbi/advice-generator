@@ -24,8 +24,6 @@ function App() {
 
   if (error) console.error(error)
 
-  console.log(data)
-
   return (
     <Wrapper>
       <main className="max-w-[540px] shadow-lg grid gap-8  text-center relative font-primary py-14 px-6 sm:px-12 sm bg-neutral-800 rounded-2xl">
