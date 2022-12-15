@@ -24,11 +24,13 @@ function App() {
 
   if (error) console.error(error)
 
+  console.log(data)
+
   return (
     <Wrapper>
       <main className="max-w-[540px] shadow-lg grid gap-8  text-center relative font-primary py-14 px-6 sm:px-12 sm bg-neutral-800 rounded-2xl">
         <p className="text-primary-400 tracking-[.25rem] text-sm">
-          ADVICE #117
+          ADVICE #{!isRefetching && data?.slip.id}
         </p>
         <div className="text-primary-200 text-quote grid place-content-center">
           {isLoading || isRefetching ? <Spinner /> : <p>{data?.slip.advice}</p>}
